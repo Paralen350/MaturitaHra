@@ -1057,6 +1057,56 @@ def draw_grid():
 		#horizontal lines
 		pygame.draw.line(screen, white, (0, c * tile_size), (screen_width, c * tile_size))
 
+#logout? Asi, netestoval jsem ještě
+'logout_btn': pygame.image.load('img/logout_btn.png') if path.exists('img/logout_btn.png') else None
+
+if not images['logout_btn']:
+    logout_surf = pygame.Surface((btn_width, btn_height))
+    logout_surf.fill((150, 50, 50))  # Dark red button
+    text = font.render('Logout', True, (255, 255, 255))
+    logout_surf.blit(text, (btn_width//2 - 40, btn_height//2 - 10))
+    images['logout_btn'] = logout_surf
+
+logout_button = Button(SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 190, images['logout_btn'])
+
+if logout_button.draw(screen):
+    user_manager.current_user = None
+    game_state.main_menu = True
+
+if user_manager.current_user:
+    # Přihlášený uživatel - zobrazení uvítací zprávy
+    draw_text(screen, f"Vítej, {user_manager.current_user}!", font, (0, 0, 0), 
+             SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 300)
+
+    # Název hry
+    draw_text(screen, "Gameska", pygame.font.SysFont('Futura', 60), (0, 0, 0), 
+             SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 - 400)
+
+    # Tlačítka pro přihlášeného uživatele
+    if start_button.draw(screen):
+        game_state.main_menu = False
+        game_state.level = 1
+        world = game_state.reset_level(player)
+        if world:
+            camera = Camera(world.width, world.height)
+
+    if leaderboard_button.draw(screen):
+        game_state.main_menu = False
+        game_state.leaderboard_menu = True
+
+    if logout_button.draw(screen):
+        user_manager.current_user = None
+        game_state.main_menu = True
+
+    if exit_button.draw(screen):
+        running = False
+
+if logout_button.draw(screen):
+    user_manager.current_user = None
+    game_state = GameState()  # Reset all game state
+    game_state.main_menu = True
+
+
 
 def draw_world():
 	for row in range(20):
