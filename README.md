@@ -1,3 +1,2 @@
-Tato hra ma dvě hlavní verze (1.1 a 1.2), verze 1.1 využívá školní databáze, nicméně na některých počítačích dochází problém s využitím mysql, varianta 1.2 je zcela funkční za využití sqlite3 (databáze v samostatném souboru společně se hrou).
+Aktuálně je k dispozici pouze verze 1.2, která využívá SQLITE3 (Kvůli problémům s mysql connectorem na různých zařízeních).
 
-8. 4. 2025 Verze 1.1 smazána.
